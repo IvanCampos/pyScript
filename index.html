@@ -5,12 +5,20 @@
     <title>PyScript</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <! -- https://pyodide.org/en/stable/usage/packages-in-pyodide.html -->
+    <py-config>
+        packages = ['pandas', 'numpy', 'requests', 'beautifulsoup4']
+    </py-config>
 </head>
 <body>
 <div id="py-div"></div>
+<div id="links"></div>
 <py-script>
+    import pandas as pd
+    import numpy as np
+    from bs4 import BeautifulSoup
     from datetime import datetime
-    from js import localStorage, document, console
+    from js import localStorage, document, console, XMLHttpRequest
 
     console.log("Hello")
     div = document.getElementById("py-div")
@@ -19,8 +27,16 @@
     now = datetime.now()
     display(now.strftime("%m/%d/%Y, %H:%M:%S"))
 
-    # localStorage.setItem("py-test","testing ls-123")
     div.innerHTML += localStorage.getItem("py-test")
+
+    req = XMLHttpRequest.new()
+    req.open("GET", "https://ivancampos.com", False)
+    req.send(None)
+    soup = BeautifulSoup(req.response, "html.parser")
+    links = soup.find_all("a")
+    linkDiv = document.getElementById("links")
+    for link in links:
+        linkDiv.innerHTML += link.get("href") + "<br/>"
 </py-script>
 </body>
 </html>
