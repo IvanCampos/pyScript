@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PyScript</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+<div id="py-div"></div>
+<py-script>
+    from datetime import datetime
+    from js import localStorage, document, console
+
+    console.log("Hello")
+    div = document.getElementById("py-div")
+    div.innerHTML = "Hello<br/>"
+
+    now = datetime.now()
+    display(now.strftime("%m/%d/%Y, %H:%M:%S"))
+
+    # localStorage.setItem("py-test","testing ls-123")
+    div.innerHTML += localStorage.getItem("py-test")
+</py-script>
+</body>
+</html>
