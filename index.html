@@ -23,10 +23,7 @@
     console.log("Hello")
     div = document.getElementById("py-div")
     div.innerHTML = "Hello<br/>"
-
-    now = datetime.now()
-    display(now.strftime("%m/%d/%Y, %H:%M:%S"))
-
+    
     div.innerHTML += localStorage.getItem("py-test")
 
     req = XMLHttpRequest.new()
