@@ -13,11 +13,12 @@
 <body>
 <div id="py-div"></div>
 <div id="links"></div>
+<div id="completion"></div>
 <py-script>
     import pandas as pd
     import numpy as np
     from bs4 import BeautifulSoup
-    from datetime import datetime
+    import json
     from js import localStorage, document, console, XMLHttpRequest
 
     storage = "Call localStorage.setItem('py-test', 'ls-123') and then refresh page"
@@ -25,6 +26,30 @@
         storage = localStorage.getItem("py-test")
     div = document.getElementById("py-div")
     div.innerHTML = storage
+
+    xhr = XMLHttpRequest.new()
+    bearer = "Bearer " + localStorage.getItem("openAI")
+    xhr.open("POST", "https://api.openai.com/v1/completions", False)
+    xhr.setRequestHeader("Content-Type", "application/json")
+    xhr.setRequestHeader("Authorization", bearer)
+
+    data = json.dumps({
+        "model": "text-ada-001",
+        "prompt": "list three colors",
+        "max_tokens": 100,
+        "temperature": 0,
+        "top_p": 1,
+        "frequency_penalty": 1.2,
+        "presence_penalty": 0
+    })
+
+    xhr.send(data)
+    json_response = json.loads(xhr.response)
+    completion_text = json_response["choices"][0]["text"]
+
+    # console.log("Colors: " + completion_text)
+    completionDiv = document.getElementById("completion")
+    completionDiv.innerHTML = completion_text.strip()
 
     req = XMLHttpRequest.new()
     req.open("GET", "https://ivancampos.com", False)
