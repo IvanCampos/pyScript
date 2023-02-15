@@ -20,11 +20,8 @@
     from datetime import datetime
     from js import localStorage, document, console, XMLHttpRequest
 
-    console.log("Hello")
     div = document.getElementById("py-div")
-    div.innerHTML = "Hello<br/>"
-    
-    div.innerHTML += localStorage.getItem("py-test")
+    div.innerHTML = localStorage.getItem("py-test")
 
     req = XMLHttpRequest.new()
     req.open("GET", "https://ivancampos.com", False)
