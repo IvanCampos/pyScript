@@ -2,63 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PyScript</title>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <! -- https://pyodide.org/en/stable/usage/packages-in-pyodide.html -->
-    <py-config>
-        packages = ['pandas', 'numpy', 'requests', 'beautifulsoup4']
-    </py-config>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PyScript Examples</title>
+    <style>
+        a {display: block}
+    </style>
 </head>
 <body>
-<div id="py-div"></div>
-<div id="links"></div>
-<div id="completion"></div>
-<py-script>
-    import pandas as pd
-    import numpy as np
-    from bs4 import BeautifulSoup
-    import json
-    from js import localStorage, document, console, XMLHttpRequest
+<h2>PyScript Examples</h2>
+    <h4>OpenAI</h4>
+    <a href="/pyscript/examples/ai/" target="_blank">Completions API</a>
 
-    storage = "Call localStorage.setItem('py-test', 'ls-123') and then refresh page"
-    if (localStorage.getItem("py-test")):
-        storage = localStorage.getItem("py-test")
-    div = document.getElementById("py-div")
-    div.innerHTML = storage
+    <h4>Numpy</h4>
+    <a href="/pyscript/examples/arrays/" target="_blank">Arrays</a>
 
-    xhr = XMLHttpRequest.new()
-    bearer = "Bearer " + localStorage.getItem("openAI")
-    xhr.open("POST", "https://api.openai.com/v1/completions", False)
-    xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.setRequestHeader("Authorization", bearer)
+    <h4>Matplotlib</h4>
+    <a href="/pyscript/examples/data-viz/3d-histogram/" target="_blank">3D Histogram</a>
+    <a href="/pyscript/examples/data-viz/barcode/" target="_blank">Barcode</a>
+    <a href="/pyscript/examples/data-viz/pie-chart/" target="_blank">Pie Chart</a>
 
-    data = json.dumps({
-        "model": "text-ada-001",
-        "prompt": "list three colors",
-        "max_tokens": 100,
-        "temperature": 0,
-        "top_p": 1,
-        "frequency_penalty": 1.2,
-        "presence_penalty": 0
-    })
+    <h4>Pandas</h4>
+    <a href="/pyscript/examples/dataframes/" target="_blank">Dataframes</a>
 
-    xhr.send(data)
-    json_response = json.loads(xhr.response)
-    completion_text = json_response["choices"][0]["text"]
-
-    # console.log("Colors: " + completion_text)
-    completionDiv = document.getElementById("completion")
-    completionDiv.innerHTML = completion_text.strip()
-
-    req = XMLHttpRequest.new()
-    req.open("GET", "https://ivancampos.com", False)
-    req.send(None)
-    soup = BeautifulSoup(req.response, "html.parser")
-    links = soup.find_all("a")
-    linkDiv = document.getElementById("links")
-    for link in links:
-        linkDiv.innerHTML += link.get("href") + "<br/>"
-</py-script>
+    <h4>Beautiful Soup</h4>
+    <a href="/pyscript/examples/web-scraping/" target="_blank">Web Scraping</a>
 </body>
 </html>

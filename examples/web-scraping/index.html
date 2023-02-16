@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PyScript + BS4</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-config>
+        packages = ['beautifulsoup4']
+    </py-config>
+</head>
+<body>
+<div id="links"></div>
+<py-script>
+    from bs4 import BeautifulSoup
+    from js import document, XMLHttpRequest
+
+    url = "https://midjourney.com"
+    req = XMLHttpRequest.new()
+    req.open("GET", url, False)
+    req.send(None)
+    soup = BeautifulSoup(req.response, "html.parser")
+
+    links = soup.find_all("a")
+
+    linkDiv = document.getElementById("links")
+    linkDiv.innerHTML = "<span>Links for " + url + "</span><br/><br/>"
+
+    for link in links:
+        full_url = link.get("href")
+        linkDiv.innerHTML += full_url + "<br/>"
+
+        # req2 = XMLHttpRequest.new()
+        # req2.open("GET", full_url, False)
+        # req2.send(None)
+        # link_soup = BeautifulSoup(req2.response, "html.parser")
+        # html = str(link_soup)
+        # print(html)
+</py-script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PyScript + Numpy</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-config>
+        packages = ['numpy']
+    </py-config>
+</head>
+<body>
+<div id="array-area"></div>
+<py-script>
+    import numpy as np
+    from js import document, XMLHttpRequest
+
+    divArray = document.getElementById("array-area")
+
+    random = np.random.rand(4,3)
+    divArray.innerHTML = "Random (4,3) Array: " + str(random.tolist()) + "<hr/>"
+
+    array = np.array([[1,2],[3,4],[5,6]])
+    shape = array.shape
+    divArray.innerHTML += "Shape of " + str(array.tolist()) + " is " + str(shape) + "<hr/>"
+
+    arrayToTranspose = np.array([['s','t','u'],['x','y','z']])
+    transposedArray = arrayToTranspose.T
+    divArray.innerHTML += str(arrayToTranspose.tolist()) + " transposed is " + str(transposedArray.tolist())
+
+</py-script>
+</body>
+</html>

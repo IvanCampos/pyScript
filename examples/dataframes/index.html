@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PyScript + Pandas</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-config>
+        packages = ['pandas', 'numpy']
+    </py-config>
+</head>
+<body>
+<div id="df-table"></div>
+<hr/>
+<div id="df2-table"></div>
+<py-script>
+    import pandas as pd
+    import numpy as np
+    from js import document
+
+    df = pd.DataFrame(
+    {"AAA": [4, 5, 6, 7], "BBB": [10, 20, 30, 40], "CCC": [100, 50, -30, -50]}
+    )
+
+    TableDF = document.getElementById("df-table")
+    TableDF.innerHTML = "DataFrame<br/>"
+
+    display(df, target="df-table", append="True")
+
+
+    df2 = pd.DataFrame(
+        data={
+            "Province": ["ON", "QC", "BC", "AL", "AL", "MN", "ON"],
+            "City": [
+                "Toronto",
+                "Montreal",
+                "Vancouver",
+                "Calgary",
+                "Edmonton",
+                "Winnipeg",
+                "Windsor",
+            ],
+            "Sales": [13, 6, 16, 8, 4, 3, 1],
+        }
+    )
+
+    pivot = pd.pivot_table(
+        df2,
+        values=["Sales"],
+        index=["Province"],
+        columns=["City"],
+        aggfunc=np.sum,
+        margins=True,
+    )
+
+    pivot.stack("City")
+
+    TableDF2 = document.getElementById("df2-table")
+    TableDF2.innerHTML = "Pivot Raw<br/>"
+
+    display(df2, target="df2-table", append="True")
+    TableDF2.innerHTML += "<br/>Pivoted"
+    display(pivot, target="df2-table", append="True")
+
+</py-script>
+</body>
+</html>
