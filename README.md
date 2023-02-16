@@ -1,4 +1,4 @@
-# PyScript
+# PyScript Examples
 
 ## PyScript Code Cookbook Contents
 * OpenAI API for completions from GPT-3
